@@ -2,13 +2,13 @@ import React from "react";
 
 const Mid = () =>{
     return(
-        <div style={{ 
-            textAlign: 'center', 
-            padding: '20rem', 
+        <div className="h-screen flex justify-center items-center" style={{ 
+            textAlign: 'center',
+            flexDirection :'column',
             backgroundColor: '#9EC8B9', 
-            height:'100%' 
+            
         }}>
-            <h1 style={{ color: '#333', fontSize: '2.5rem', marginBottom: '10px' }}>
+            <h1 className="font-bold" style={{ color: '#333', fontSize: '2.5rem', marginBottom: '10px' }}>
                 Start your Journey Today
             </h1>
             <h2 style={{ color: '#555', fontSize: '2rem', marginBottom: '8px' }}>
