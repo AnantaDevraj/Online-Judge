@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Mid from "./components/Mid";
 import Problem from "./components/Problem";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 function App(){
 
   return (
@@ -18,6 +19,9 @@ function App(){
             </div>
             <div>
               <Login />
+            </div>
+            <div>
+              <Signup />
             </div>
             <div>
               <Footer />
