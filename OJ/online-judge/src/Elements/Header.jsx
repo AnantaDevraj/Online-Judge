@@ -12,7 +12,7 @@ const Navbar = () => {
         <ul className="flex space-x-4">
           <li>
             <Link
-              to="/"
+              to="/" 
               className="bg-red-500 text-white py-1 px-2 text-sm rounded hover:bg-red-600 transition"
             >
                 <button>Home</button>
