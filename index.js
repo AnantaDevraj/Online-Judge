@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './API/routes/user.route.js';
 import authRoutes from './API/routes/auth.route.js';
+
 // Load environment variables from .env file
 dotenv.config();
 
@@ -18,6 +19,7 @@ mongoose
 
 const app = express();
 app.use(express.json());
+
 
 // ** when you callback a function always prefer for 'use' not 'get' **
 app.use('/api/user', userRoutes); // it is call back from user.route.js
