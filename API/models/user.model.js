@@ -1,27 +1,26 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    Name : {
-        type : String,
-        require : true,
-        unique : true
-    },
-    email:{
-        type : String,
-        require : true,
-        unique : true
-    },
-    password:{
-        type : String,
-        require : true,
-    },
-    phoneNo :{
-        type :String,
-        require : true,
-        unique: true
-    }
-    },{timestamps : true} // we have to save the time of creation and time of Update
-);
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    unique: true
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required']
+  },
+  phoneNo: {
+    type: String,
+    required: [true, 'Phone number is required']
+  }
+});
 
-const User = mongoose.model('User', userSchema); // it creates a user model with name of 'User'
+const User = mongoose.model('User', userSchema);
+
 export default User;

@@ -27,7 +27,7 @@ const Signup = () => {
       const response = await axios.post('/api/auth/signup', formData);
       setMessage(response.data.message);
     } catch (error) {
-      setMessage(error.response.data.message);
+      setMessage(error.response?.data?.message || 'An error occurred');
     } finally {
       setLoading(false);
     }

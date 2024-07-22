@@ -1,36 +1,41 @@
 import express from 'express';
-import User from '../models/user.model.js'; // Assuming you have a User model
+import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
-// Signup Route
 router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password, phoneNo } = req.body;
+
+  if (!name || !email || !password || !phoneNo) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
   try {
-    // Check if the user already exists
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create a new user
+    // Create new user
     const newUser = new User({
-      username,
+      name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      phoneNo
     });
 
-    // Save the user to the database
+    // Save the user
     await newUser.save();
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
