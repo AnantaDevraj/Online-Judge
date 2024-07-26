@@ -1,47 +1,34 @@
+// server.js or app.js
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import userRoutes from './API/routes/user.route.js';
-import authRoutes from './API/routes/auth.route.js';
 import cors from 'cors';
-
-// Load environment variables from .env file
+import authRoutes from './API/routes/auth.route.js';
+import dotenv from 'dotenv';
 dotenv.config();
 
-// Log the environment variables to check if they are loaded correctly
-const PORT = process.env.PORT || 3000;
-
-mongoose
-  .connect(
-    process.env.MONGO
-  ).then(() => console.log('mongoDB is Connected'))
-  .catch(err => console.log('refuse to connect..', err));
-
 const app = express();
+
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// CORS middleware
-app.use(cors({
-  origin: '*', // Allow all origins
-  methods: 'GET, POST, PUT, DELETE, OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization'
-}));
-
 // Routes
-app.use('/api/user', userRoutes); // it is call back from user.route.js
-app.use('/api/auth', authRoutes); // it is call back from auth.route.js
+app.use('/api/auth', authRoutes);
 
-// Error-handling middleware
+// Error handling
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-  res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message
-  });
+  console.error(err);
+  res.status(err.statusCode || 500).json({ message: err.message });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Connect to MongoDB and start server
+const PORT = process.env.PORT || 3000;
+mongoose.connect(process.env.MONGO)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Database connection error:', err);
+  });

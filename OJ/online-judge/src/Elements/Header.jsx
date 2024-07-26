@@ -46,10 +46,10 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/login"
+              to="/signin"
               className="bg-green-500 text-white py-1 px-2 text-sm rounded hover:bg-green-600 transition"
             >
-              <button>Login</button>
+              <button>Sign in</button>
             </Link>
           </li>
         </ul>

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Signup = () => {
+const Signin = () => {
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: ''
   });
@@ -19,27 +18,27 @@ const Signup = () => {
     });
   };
 
-  const handleSignup = async (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
 
     // Validate data before sending
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.email || !formData.password) {
       setMessage('All fields are required');
       setLoading(false);
       return;
     }
 
     try {
-      const response = await axios.post('/api/auth/signup', formData, {
+      const response = await axios.post('/api/auth/signin', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
 
       setMessage(response.data.message);
-      navigate('/signin'); // Navigate to the sign-in page after successful signup
+      navigate('/Problems'); // Navigate to the dashboard or home page after successful sign-in
     } catch (error) {
       setMessage(error.response?.data?.message || 'Server error');
     } finally {
@@ -52,28 +51,12 @@ const Signup = () => {
       <div className="w-full max-w-sm p-8 bg-white bg-opacity-80 rounded-lg shadow-lg">
         <div className="header mb-5 text-center">
           <div className="text font-bold text-2xl" style={{ color: 'GrayText' }}>
-            Sign Up
+            Sign In
           </div>
           <div className="underline h-1 bg-gray-400 mt-2 mb-4"></div>
         </div>
         {message && <div className="mb-4 text-red-600">{message}</div>}
-        <form onSubmit={handleSignup}>
-          <div className="input mb-4">
-            <label className="block font-semibold mb-2" htmlFor="name">
-              Name<span className="required text-red-600">*</span>
-            </label>
-            <input
-              id="name"
-              name="name"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
-              type="text"
-              placeholder="Name"
-              autoComplete="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <form onSubmit={handleSignin}>
           <div className="input mb-4">
             <label className="block font-semibold mb-2" htmlFor="email">
               Email<span className="required text-red-600">*</span>
@@ -118,15 +101,15 @@ const Signup = () => {
                   <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                'Sign Up'
+                'Sign In'
               )}
             </button>
           </div>
         </form>
         <div className="mt-4 text-center">
-          <span>Already have an account? </span>
-          <Link to="/signin" className="text-blue-600 hover:text-blue-700">
-            Sign In
+          <span>Don't have an account? </span>
+          <Link to="/signup" className="text-blue-600 hover:text-blue-700">
+            Sign Up
           </Link>
         </div>
       </div>
@@ -134,4 +117,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;
