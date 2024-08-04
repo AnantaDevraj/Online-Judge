@@ -17,7 +17,12 @@ const submissionSchema = new mongoose.Schema({
     },
     status :{
         type : String,
+        enum :['Accepted' ,'Wrong answer' , 'Compilation Error' , 'Runtime Error'],
         required : true
+    },
+    submittedAt:{
+        type: Date,
+        default: Date.now
     }
 });
 
