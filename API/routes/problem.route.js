@@ -1,3 +1,4 @@
+
 import express from 'express';
 import {
     createProblem,
@@ -5,7 +6,7 @@ import {
     updateProblem,
     deleteProblem,
     getAllProblems,
-} from '../controllers/problemController.js';
+} from '../controllers/problem.controllers.js';
 
 const router = express.Router();
 

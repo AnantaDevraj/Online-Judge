@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './API/routes/auth.route.js';
+import problemRoutes from './API/routes/problem.route.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/problems', problemRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
