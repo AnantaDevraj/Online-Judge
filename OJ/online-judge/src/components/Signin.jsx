@@ -38,7 +38,7 @@ const Signin = () => {
       });
 
       setMessage(response.data.message);
-      navigate('/Problems'); // Navigate to the dashboard or home page after successful sign-in
+      navigate('/solve-problem'); // Navigate to the dashboard or home page after successful sign-in
     } catch (error) {
       setMessage(error.response?.data?.message || 'Server error');
     } finally {

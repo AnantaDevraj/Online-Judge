@@ -1,61 +1,64 @@
-import Problem from '../models/problem.model.js';
+import ProblemModel from '../models/problem.model.js';
 
-// Create a new problem
 export const createProblem = async (req, res) => {
     try {
-        const problem = new Problem(req.body);
-        await problem.save();
-        res.status(201).json(problem);
+      const newProblem = new ProblemModel(req.body);
+      await newProblem.save();
+      res.status(201).json(newProblem);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+      console.error('Error creating problem:', error);
+      res.status(500).json({ message: 'Failed to create problem' });
     }
+  };
+
+export const getProblems = async (req, res) => {
+  try {
+    const problems = await ProblemModel.find();
+    res.status(200).json(problems);
+  } catch (error) {
+    console.error('Error fetching problems:', error);
+    res.status(500).json({ message: 'Failed to fetch problems' });
+  }
 };
 
-// Get a problem by ID
-export const getProblemById = async (req, res) => {
-    try {
-        const problem = await Problem.findById(req.params.id);
-        if (!problem) {
-            return res.status(404).json({ message: 'Problem not found' });
-        }
-        res.json(problem);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+export const getProblem = async (req, res) => {
+  try {
+    const problem = await ProblemModel.findById(req.params.id);
+    if (problem) {
+      res.status(200).json(problem);
+    } else {
+      res.status(404).json({ message: 'Problem not found' });
     }
+  } catch (error) {
+    console.error('Error fetching problem:', error);
+    res.status(500).json({ message: 'Failed to fetch problem' });
+  }
 };
 
-// Update a problem by ID
 export const updateProblem = async (req, res) => {
-    try {
-        const problem = await Problem.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!problem) {
-            return res.status(404).json({ message: 'Problem not found' });
-        }
-        res.json(problem);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+  try {
+    const updatedProblem = await ProblemModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (updatedProblem) {
+      res.status(200).json(updatedProblem);
+    } else {
+      res.status(404).json({ message: 'Problem not found' });
     }
+  } catch (error) {
+    console.error('Error updating problem:', error);
+    res.status(500).json({ message: 'Failed to update problem' });
+  }
 };
 
-// Delete a problem by ID
 export const deleteProblem = async (req, res) => {
-    try {
-        const problem = await Problem.findByIdAndDelete(req.params.id);
-        if (!problem) {
-            return res.status(404).json({ message: 'Problem not found' });
-        }
-        res.json({ message: 'Problem deleted' });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+  try {
+    const deletedProblem = await ProblemModel.findByIdAndDelete(req.params.id);
+    if (deletedProblem) {
+      res.status(200).json({ message: 'Problem deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Problem not found' });
     }
-};
-
-// List all problems
-export const getAllProblems = async (req, res) => {
-    try {
-        const problems = await Problem.find();
-        res.json(problems);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+  } catch (error) {
+    console.error('Error deleting problem:', error);
+    res.status(500).json({ message: 'Failed to delete problem' });
+  }
 };
